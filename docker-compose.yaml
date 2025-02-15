@@ -1,0 +1,25 @@
+services:
+  api:
+    build:
+      context: ./backend/CarMaintenanceShop.Api
+      dockerfile: Dockerfile
+    ports:
+      - "5139:80"
+    depends_on:
+      - db
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=db;Database=CarShopDb;User=postgres;Password=postgres
+
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=CarShopDb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
